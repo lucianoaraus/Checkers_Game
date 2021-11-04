@@ -22,6 +22,7 @@ export default function Chessboard() {
   const referee = new Referee();
 
   function grabPiece(e: React.MouseEvent) {
+    //Esta funcion sirve para poder AGARRAR una pieza
     const element = e.target as HTMLElement;
     const chessboard = chessboardRef.current;
     if (element.classList.contains("chess-piece") && chessboard) {
@@ -42,6 +43,7 @@ export default function Chessboard() {
   }
 
   function movePiece(e: React.MouseEvent) {
+    //Esta funcion sirve para poder MOVER una pieza
     const chessboard = chessboardRef.current;
     if (activePiece && chessboard) {
       const minX = chessboard.offsetLeft - 25;
@@ -81,6 +83,7 @@ export default function Chessboard() {
   }
 
   function dropPiece(e: React.MouseEvent) {
+    //Esta funcion sirve para poder DEJAR una pieza
     const chessboard = chessboardRef.current;
     if (activePiece && chessboard) {
       const x = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);

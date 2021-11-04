@@ -85,9 +85,13 @@ export default class Referee {
 
     //MOVEMENT LOGIC
     if (
-      initialPosition.x === desiredPosition.x &&
-      initialPosition.y === specialRow &&
-      desiredPosition.y - initialPosition.y === 2 * pawnDirection
+      initialPosition.x ===
+        (desiredPosition.x + 1 || //new-code: el peon se mueve hacia la derecha
+          desiredPosition.x - 1) && //new-code: el peon se mueve hacia la izquierda //TODO: Caso de borde
+      //old-code:
+      //initialPosition.y === specialRow &&
+      //desiredPosition.y - initialPosition.y === 2 * pawnDirection
+      initialPosition.y === desiredPosition.y + pawnDirection //new-code: el peon se mueve hacia adelante
     ) {
       if (
         !this.tileIsOccupied(desiredPosition, boardState) &&
@@ -99,7 +103,7 @@ export default class Referee {
         return true;
       }
     } else if (
-      initialPosition.x === desiredPosition.x &&
+      initialPosition.x === (desiredPosition.x + 1 || desiredPosition.x - 1) &&
       desiredPosition.y - initialPosition.y === pawnDirection
     ) {
       if (!this.tileIsOccupied(desiredPosition, boardState)) {
@@ -108,6 +112,11 @@ export default class Referee {
     }
     //ATTACK LOGIC
     else if (
+      //traduccion:
+      //desirePosition.x = x
+      //initialPosition.x = px
+      //x - px === -1 && y - py === pawnDirection
+
       desiredPosition.x - initialPosition.x === -1 &&
       desiredPosition.y - initialPosition.y === pawnDirection
     ) {
@@ -125,10 +134,10 @@ export default class Referee {
       }
     }
 
-    return false;
+    return false; //Si lo cambio a true, puedo mover y comer libremente (pero no respeta movimientos permitidos de damas)
   }
 
-  knightMove(
+  /* knightMove(
     initialPosition: Position,
     desiredPosition: Position,
     team: TeamType,
@@ -351,7 +360,7 @@ export default class Referee {
       }
     }
     return false;
-  }
+  } */
 
   queenMove(
     initialPosition: Position,
